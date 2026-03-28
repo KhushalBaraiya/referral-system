@@ -50,7 +50,12 @@ new class extends Component {
             'parent_id' => Auth::id(),
         ]);
 
+        $user->assignRole('user');
+
         $this->closeModal();
+
+        $this->reset(['name', 'email', 'password']);
+        $this->resetPage();
 
         session()->flash('success', 'User created successfully 🚀');
     }
