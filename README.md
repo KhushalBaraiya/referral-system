@@ -46,8 +46,8 @@ Income is calculated dynamically:
 ### 1️⃣ Clone Project
 
 ```bash
-git clone https://github.com/your-username/earnref.git
-cd earnref
+git clone https://github.com/KhushalBaraiya/referral-system.git
+cd referral-system
 ```
 
 ---
@@ -117,8 +117,8 @@ http://127.0.0.1:8000
 
 | Role  | Email                                         | Password |
 | ----- | --------------------------------------------- | -------- |
-| Admin | [admin@example.com](mailto:admin@example.com) | password |
-| User  | [user@example.com](mailto:user@example.com)   | password |
+| Admin |   [admin@gmail.com](mailto:admin@gmail.com)   |  123456  |
+| User  |   [user@gmail.com](mailto:user@gmail.com)     |  123456  |
 
 ---
 

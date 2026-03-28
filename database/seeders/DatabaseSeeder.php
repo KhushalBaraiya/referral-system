@@ -26,12 +26,50 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
         $admin->assignRole(User::ROLE_ADMIN);
-        $user = User::create([
+        $root = User::create([
             'name' => 'User',
             'email' => 'user@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('123456'),
         ]);
-        $user->assignRole(User::ROLE_USER);
+        $root->assignRole(User::ROLE_USER);
+
+        // $parent = $root;
+
+        // for ($i = 2; $i <= 10; $i++) {
+
+        //     $user = User::create([
+        //         'name' => 'User ' . chr(64 + $i), // B, C, D...
+        //         'email' => 'user' . $i . '@gmail.com',
+        //         'email_verified_at' => now(),
+        //         'password' => Hash::make('123456'),
+        //         'parent_id' => $parent->id,
+        //     ]);
+
+        //     $user->assignRole(User::ROLE_USER);
+
+        //     $parent = $user;
+        // }
+
+        // // 👥 CREATE 20 RANDOM USERS (REAL TREE)
+        // $users = [$root]; // start from root
+
+        // for ($i = 1; $i <= 20; $i++) {
+
+        //     // random parent from existing users
+        //     $randomParent = $users[array_rand($users)];
+
+        //     $user = User::create([
+        //         'name' => fake()->name(),
+        //         'email' => 'demo' . $i . '@gmail.com',
+        //         'email_verified_at' => now(),
+        //         'password' => Hash::make('123456'),
+        //         'parent_id' => $randomParent->id,
+        //     ]);
+
+        //     $user->assignRole(User::ROLE_USER);
+
+        //     $users[] = $user; // add for future tree
+        // }
     }
 }
