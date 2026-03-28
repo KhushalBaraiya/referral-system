@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+.logo {
+    font-family: 'Syne', sans-serif;
+}

@@ -11,6 +11,26 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function dashboard()
+    {
+        $user = Auth::user();
+
+        $referrals = getAllReferrals($user);
+
+        $totalReferrals = count($referrals);
+
+        $totalIncome = calculateIncome($referrals);
+
+        $maxLevel = collect($referrals)->max('level') ?? 0;
+
+        return view('dashboard', compact(
+            'totalReferrals',
+            'totalIncome',
+            'maxLevel',
+            'referrals'
+        ));
+    }
+
     /**
      * Display the user's profile form.
      */
