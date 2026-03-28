@@ -55,14 +55,6 @@ new class extends Component {
         session()->flash('success', 'User created successfully 🚀');
     }
 
-    public function delete($id)
-    {
-        $user = User::where('parent_id', Auth::id())->findOrFail($id);
-        $user->delete();
-
-        session()->flash('success', 'User deleted successfully 🚀');
-    }
-
     public function getUsersProperty()
     {
         return User::query()
@@ -121,7 +113,6 @@ new class extends Component {
                     <th class="p-4 text-left">Email</th>
                     <th class="p-4 text-left">Referred By</th>
                     <th class="p-4 text-left">Joined</th>
-                    <th class="p-4 text-right">Action</th>
                 </tr>
             </thead>
 
@@ -133,27 +124,11 @@ new class extends Component {
                         <td class="p-4 text-gray-400">{{ $user->email }}</td>
                         <td class="p-4 text-green-400">{{ $user->parent?->name ?? 'Direct' }}</td>
                         <td class="p-4 text-gray-400">{{ $user->created_at->diffForHumans() }}</td>
-
-                        <td class="p-4 text-right flex gap-2 justify-end">
-
-                            <a href="{{ route('users.show', $user->id) }}"
-                                class="px-3 py-1 text-xs bg-blue-500/20 text-blue-400 rounded-lg">
-                                View
-                            </a>
-
-                            <button wire:click="delete({{ $user->id }})"
-                                onclick="confirm('Are you sure?') || event.stopImmediatePropagation()"
-                                class="px-3 py-1 text-xs bg-red-500/20 text-red-400 rounded-lg">
-                                Delete
-                            </button>
-
-                        </td>
-
                     </tr>
                 @empty
                     <tr>
                         <td colspan="5" class="p-4 text-center text-gray-400">
-                            No users found 🚀
+                            No users found
                         </td>
                     </tr>
                 @endforelse

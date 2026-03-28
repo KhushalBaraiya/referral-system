@@ -12,4 +12,23 @@ class UserController extends Controller
     {
         return view('admin.users.index');
     }
+
+    public function show($id)
+    {
+        $user = User::with('parent', 'children')->findOrFail($id);
+
+        $referrals = getAllReferrals($user);
+
+        $totalReferrals = count($referrals);
+        $totalIncome = calculateIncome($referrals);
+        $maxLevel = collect($referrals)->max('level') ?? 0;
+
+        return view('admin.users.show', compact(
+            'user',
+            'referrals',
+            'totalReferrals',
+            'totalIncome',
+            'maxLevel'
+        ));
+    }
 }

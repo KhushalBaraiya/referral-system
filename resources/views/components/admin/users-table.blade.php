@@ -19,6 +19,9 @@ new class extends Component {
     public function getUsersProperty()
     {
         return User::query()
+            ->whereHas('roles', function ($query) {
+                $query->where('name', 'user');
+            })
             ->with('parent:id,name')
             ->select('id', 'name', 'email', 'parent_id', 'created_at')
             ->when($this->search, function ($query) {
@@ -53,6 +56,7 @@ new class extends Component {
                     <th class="p-4 text-left">Email</th>
                     <th class="p-4 text-left">Referred By</th>
                     <th class="p-4 text-left">Joined</th>
+                    <th class="p-4 text-right">Action</th>
                 </tr>
             </thead>
 
@@ -71,12 +75,17 @@ new class extends Component {
                         <td class="p-4 text-gray-400">
                             {{ $user->created_at->diffForHumans() }}
                         </td>
-
+                        <td class="p-4 text-right">
+                            <a href="{{ route('users.show', $user->id) }}"
+                                class="px-3 py-1 text-xs bg-green-400/10 text-green-400 border border-green-400/20 rounded-lg hover:bg-green-400 hover:text-black transition">
+                                View
+                            </a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
                         <td colspan="4" class="p-4 text-center text-gray-400">
-                            No users found 🚀
+                            No users found
                         </td>
                     </tr>
                 @endforelse

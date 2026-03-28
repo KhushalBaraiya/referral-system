@@ -1,5 +1,4 @@
 <x-app-layout>
-
     @php
         $hour = now()->hour;
         $greeting = $hour < 12 ? 'Good Morning ☀️' : ($hour < 18 ? 'Good Afternoon 🌤️' : 'Good Evening 🌙');
@@ -129,37 +128,50 @@
     @endhasrole
 
     @hasrole('admin')
+
         <!-- HEADER -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold logo">{{ $greeting }}, Admin 👑</h1>
-            <p class="text-gray-400 text-sm mt-1">Manage your platform overview</p>
+            <h1 class="text-3xl font-bold logo">
+                {{ $greeting }}, Admin 👑
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Manage your platform overview
+            </p>
         </div>
 
-        <!-- STATS GRID -->
+        <!-- STATS -->
         <div class="grid md:grid-cols-4 gap-6">
 
             <!-- TOTAL USERS -->
             <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur hover:border-green-400 transition">
                 <p class="text-gray-400 text-sm">Total Users</p>
-                <h2 class="text-3xl font-bold text-green-400">120</h2>
+                <h2 class="text-3xl font-bold text-green-400">
+                    {{ $totalUsers }}
+                </h2>
             </div>
 
             <!-- TODAY USERS -->
             <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur hover:border-green-400 transition">
                 <p class="text-gray-400 text-sm">Today Registrations</p>
-                <h2 class="text-3xl font-bold">8</h2>
+                <h2 class="text-3xl font-bold">
+                    {{ $todayUsers }}
+                </h2>
             </div>
 
             <!-- TOTAL REFERRALS -->
             <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur hover:border-green-400 transition">
                 <p class="text-gray-400 text-sm">Total Referrals</p>
-                <h2 class="text-3xl font-bold">340</h2>
+                <h2 class="text-3xl font-bold">
+                    {{ $totalReferrals }}
+                </h2>
             </div>
 
             <!-- TOTAL EARNINGS -->
             <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur hover:border-green-400 transition">
                 <p class="text-gray-400 text-sm">Total Earnings</p>
-                <h2 class="text-3xl font-bold text-green-400">₹25,000</h2>
+                <h2 class="text-3xl font-bold text-green-400">
+                    ₹{{ $totalIncome }}
+                </h2>
             </div>
 
         </div>
@@ -171,7 +183,7 @@
 
             <div class="bg-white/5 border border-white/10 rounded-2xl backdrop-blur overflow-hidden">
 
-                <table class="w-full text-sm">
+                <table class="w-full text-sm table-auto">
                     <thead class="border-b border-white/10 text-gray-400">
                         <tr>
                             <th class="p-4 text-left">Name</th>
@@ -182,24 +194,27 @@
 
                     <tbody>
 
-                        <!-- STATIC -->
-                        <tr class="border-b border-white/5 hover:bg-white/5">
-                            <td class="p-4">Rahul Patel</td>
-                            <td class="p-4 text-gray-400">rahul@gmail.com</td>
-                            <td class="p-4">2 hours ago</td>
-                        </tr>
+                        @forelse ($recentUsers as $user)
+                            <tr class="border-b border-white/5 hover:bg-white/5">
 
-                        <tr class="border-b border-white/5 hover:bg-white/5">
-                            <td class="p-4">Amit Shah</td>
-                            <td class="p-4 text-gray-400">amit@gmail.com</td>
-                            <td class="p-4">1 day ago</td>
-                        </tr>
+                                <td class="p-4">{{ $user->name }}</td>
 
-                        <tr class="hover:bg-white/5">
-                            <td class="p-4">Neha Jain</td>
-                            <td class="p-4 text-gray-400">neha@gmail.com</td>
-                            <td class="p-4">2 days ago</td>
-                        </tr>
+                                <td class="p-4 text-gray-400 break-all">
+                                    {{ $user->email }}
+                                </td>
+
+                                <td class="p-4">
+                                    {{ $user->created_at->diffForHumans() }}
+                                </td>
+
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="p-4 text-center text-gray-400">
+                                    No users found 🚀
+                                </td>
+                            </tr>
+                        @endforelse
 
                     </tbody>
 
@@ -216,7 +231,7 @@
 
             <div class="bg-white/5 border border-white/10 rounded-2xl backdrop-blur overflow-hidden">
 
-                <table class="w-full text-sm">
+                <table class="w-full text-sm table-auto">
                     <thead class="border-b border-white/10 text-gray-400">
                         <tr>
                             <th class="p-4 text-left">User</th>
@@ -227,23 +242,27 @@
 
                     <tbody>
 
-                        <tr class="border-b border-white/5 hover:bg-white/5">
-                            <td class="p-4">Ravi</td>
-                            <td class="p-4 text-green-400">Rahul</td>
-                            <td class="p-4">Today</td>
-                        </tr>
+                        @forelse ($recentReferrals as $ref)
+                            <tr class="border-b border-white/5 hover:bg-white/5">
 
-                        <tr class="border-b border-white/5 hover:bg-white/5">
-                            <td class="p-4">Kiran</td>
-                            <td class="p-4 text-green-400">Amit</td>
-                            <td class="p-4">Yesterday</td>
-                        </tr>
+                                <td class="p-4">{{ $ref->name }}</td>
 
-                        <tr class="hover:bg-white/5">
-                            <td class="p-4">Priya</td>
-                            <td class="p-4 text-green-400">Neha</td>
-                            <td class="p-4">2 days ago</td>
-                        </tr>
+                                <td class="p-4 text-green-400">
+                                    {{ $ref->parent?->name ?? '-' }}
+                                </td>
+
+                                <td class="p-4">
+                                    {{ $ref->created_at->diffForHumans() }}
+                                </td>
+
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="p-4 text-center text-gray-400">
+                                    No referrals found
+                                </td>
+                            </tr>
+                        @endforelse
 
                     </tbody>
 
@@ -252,5 +271,6 @@
             </div>
 
         </div>
+
     @endhasrole
 </x-app-layout>
