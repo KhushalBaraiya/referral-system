@@ -43,7 +43,7 @@ new class extends Component {
             'password' => 'required|min:8',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
@@ -54,10 +54,9 @@ new class extends Component {
 
         $this->closeModal();
 
-        $this->reset(['name', 'email', 'password']);
-        $this->resetPage();
-
         session()->flash('success', 'User created successfully 🚀');
+
+        return redirect(route('referrals', absolute: false));
     }
 
     public function getUsersProperty()
